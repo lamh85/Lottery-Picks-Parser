@@ -10280,18 +10280,16 @@
 	        break;
 	      }
 	    }
-	    if (foundRightMostNumber == true) {
-	      var newPosition = clonedMarkersList[rightMostFinder] = clonedMarkersList[rightMostFinder] + 2;
 
-	      if (newPosition <= maxPosition) {
-	        // Set the subsequent numbers as consecutive
-	        for (var remainingIndices = rightMostFinder + 1; remainingIndices < clonedMarkersList.length; remainingIndices++) {
-	          clonedMarkersList[remainingIndices] = clonedMarkersList[remainingIndices - 1] + 1;
-	        }
-
-	        markerListsArray.push(clonedMarkersList);
-	        recursiveMarkersMaker(lastMarkersList, maxPosition, clonedMarkersList, markerListsArray);
+	    var newPosition = clonedMarkersList[rightMostFinder] = clonedMarkersList[rightMostFinder] + 2;
+	    if (foundRightMostNumber == true && newPosition <= maxPosition) {
+	      // Set the subsequent numbers as consecutive
+	      for (var remainingIndices = rightMostFinder + 1; remainingIndices < clonedMarkersList.length; remainingIndices++) {
+	        clonedMarkersList[remainingIndices] = clonedMarkersList[remainingIndices - 1] + 1;
 	      }
+
+	      markerListsArray.push(clonedMarkersList);
+	      recursiveMarkersMaker(lastMarkersList, maxPosition, clonedMarkersList, markerListsArray);
 	    }
 	  }
 	  // Cannot move any more markers. Return the full array.
