@@ -1,33 +1,7 @@
 import makeResponse from './makeResponse'
+import { isEnoughNumbers, areAllUnique, areAllValidSizes } from './validators'
 
-// Validation functions ---------------------------
-
-const isEnoughNumbers = (picksString) => {
-  if (picksString.length >= 7 && picksString.length <= 14) {
-    return makeResponse("success", "")
-  } else {
-    return makeResponse("failed", "Invalid number of digits. There must be between 7 and 14 numbers in this string.")
-  }
-}
-
-const areAllUnique = (picks) => {
-  var picks = picks.sort()
-  for (var index = 0; index < picks.length; index ++) {
-    if (picks[index] == picks[index + 1]) {
-      return makeResponse("failed", "This number is duplicated: " + picks[index])
-    }
-  }
-  return makeResponse("success", "")
-}
-
-const areAllValidSizes = (picks) => {
-  for (var index = 0; index < picks.length; index ++) {
-    if (picks[index] < 1 || picks[index] > 59) {
-      return makeResponse("failed", "This lotto pick is out of range: " + picks[index])
-    }
-  }
-  return makeResponse("success", "")
-}
+// Validation ----------------------------------------------------------------
 
 const validateEachPick = (picks) => {
   var validationResult = areAllUnique(picks)
@@ -55,7 +29,7 @@ const recursiveMarkersMaker = (lastMarkersList, maxPosition, minimumSpace, marke
     markerListsArray.push(clonedMarkersList)
 
     recursiveMarkersMaker(lastMarkersList, maxPosition, minimumSpace, clonedMarkersList, markerListsArray)
-  // Move the right-most marker
+  // The last marker has reached the end of the string. Therefore, move the right-most marker.
   } else if (clonedMarkersList[0] != lastMarkersList[0]) {
     // Find the right-most marker that has not been moved to final position yet
     var foundRightMostNumber = false
@@ -65,18 +39,16 @@ const recursiveMarkersMaker = (lastMarkersList, maxPosition, minimumSpace, marke
         break
       }
     }
-    if (foundRightMostNumber == true) {
-      var newPosition = clonedMarkersList[rightMostFinder] + minimumSpace
 
-      if (newPosition <= maxPosition) {
-        // Set the subsequent numbers as consecutive
-        for (var remainingIndices = rightMostFinder + 1; remainingIndices < clonedMarkersList.length; remainingIndices ++) {
-          clonedMarkersList[remainingIndices] = clonedMarkersList[remainingIndices-1] + 1
-        }
-
-        markerListsArray.push(clonedMarkersList)
-        recursiveMarkersMaker(lastMarkersList, maxPosition, minimumSpace, clonedMarkersList, markerListsArray)
+    var newPosition = clonedMarkersList[rightMostFinder] + minimumSpace
+    if (foundRightMostNumber == true && newPosition <= maxPosition) {
+      // Set the subsequent numbers as consecutive
+      for (var remainingIndices = rightMostFinder + 1; remainingIndices < clonedMarkersList.length; remainingIndices ++) {
+        clonedMarkersList[remainingIndices] = clonedMarkersList[remainingIndices-1] + 1
       }
+
+      markerListsArray.push(clonedMarkersList)
+      recursiveMarkersMaker(lastMarkersList, maxPosition, minimumSpace, clonedMarkersList, markerListsArray)
     }
   }
   // Cannot move any more markers. Return the full array.
