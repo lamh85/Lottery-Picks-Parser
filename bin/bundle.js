@@ -10200,7 +10200,7 @@
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -10210,19 +10210,44 @@
 
 	var _makeResponse2 = _interopRequireDefault(_makeResponse);
 
-	var _validators = __webpack_require__(5);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// Validation ----------------------------------------------------------------
+	// Validation functions ---------------------------
+
+	var isEnoughNumbers = function isEnoughNumbers(picksString) {
+	  if (picksString.length >= 7 && picksString.length <= 14) {
+	    return (0, _makeResponse2.default)("success", "");
+	  } else {
+	    return (0, _makeResponse2.default)("failed", "There must be between 7 and 14 numbers in this string.");
+	  }
+	};
+
+	var areAllUnique = function areAllUnique(picks) {
+	  var picks = picks.sort();
+	  for (var index = 0; index < picks.length; index++) {
+	    if (picks[index] == picks[index + 1]) {
+	      return (0, _makeResponse2.default)("failed", "This number is duplicated: " + picks[index]);
+	    }
+	  }
+	  return (0, _makeResponse2.default)("success", "");
+	};
+
+	var areAllValidSizes = function areAllValidSizes(picks) {
+	  for (var index = 0; index < picks.length; index++) {
+	    if (picks[index] < 1 || picks[index] > 59) {
+	      return (0, _makeResponse2.default)("failed", "This lotto pick is out of range: " + picks[index]);
+	    }
+	  }
+	  return (0, _makeResponse2.default)("success", "");
+	};
 
 	var validateEachPick = function validateEachPick(picks) {
-	  var validationResult = (0, _validators.areAllUnique)(picks);
+	  var validationResult = areAllUnique(picks);
 	  if (validationResult.status == "failed") {
 	    return validationResult;
 	  }
 
-	  validationResult = (0, _validators.areAllValidSizes)(picks);
+	  validationResult = areAllValidSizes(picks);
 	  if (validationResult.status == "failed") {
 	    return validationResult;
 	  }
@@ -10231,15 +10256,6 @@
 
 	// Make markers -------------------------------------
 
-	/*
-	lastMarkersList = The most recently-generated parsing scenario.
-	  EG: [0, 1] // The single digits are at indexes 0, and 1.
-	maxPosition = The last index number of the series of digits.
-	  EG: The maxPosition of "1234" is 3.
-	lastMarkersList = A scenario in which all of the single-digits are at the end of the series.
-	  EG: [9, 10, 11] if the series has 12 digits
-	markerListsArray = A culminating list of parsing scenarios that grows in each recursive iteration.
-	*/
 	var recursiveMarkersMaker = function recursiveMarkersMaker(lastMarkersList, maxPosition, minimumSpace, markersList, markerListsArray) {
 	  var clonedMarkersList = markersList.slice(0);
 	  var markerListsArray = markerListsArray;
@@ -10251,7 +10267,7 @@
 	    markerListsArray.push(clonedMarkersList);
 
 	    recursiveMarkersMaker(lastMarkersList, maxPosition, minimumSpace, clonedMarkersList, markerListsArray);
-	    // The last marker has reached the end of the string. Therefore, move the right-most marker.
+	    // Move the right-most marker
 	  } else if (clonedMarkersList[0] != lastMarkersList[0]) {
 	    // Find the right-most marker that has not been moved to final position yet
 	    var foundRightMostNumber = false;
@@ -10261,16 +10277,18 @@
 	        break;
 	      }
 	    }
+	    if (foundRightMostNumber == true) {
+	      var newPosition = clonedMarkersList[rightMostFinder] = clonedMarkersList[rightMostFinder] + minimumSpace;
 
-	    var newPosition = clonedMarkersList[rightMostFinder] + minimumSpace;
-	    if (foundRightMostNumber == true && newPosition <= maxPosition) {
-	      // Set the subsequent numbers as consecutive
-	      for (var remainingIndices = rightMostFinder + 1; remainingIndices < clonedMarkersList.length; remainingIndices++) {
-	        clonedMarkersList[remainingIndices] = clonedMarkersList[remainingIndices - 1] + 1;
+	      if (newPosition <= maxPosition) {
+	        // Set the subsequent numbers as consecutive
+	        for (var remainingIndices = rightMostFinder + 1; remainingIndices < clonedMarkersList.length; remainingIndices++) {
+	          clonedMarkersList[remainingIndices] = clonedMarkersList[remainingIndices - 1] + 1;
+	        }
+
+	        markerListsArray.push(clonedMarkersList);
+	        recursiveMarkersMaker(lastMarkersList, maxPosition, minimumSpace, clonedMarkersList, markerListsArray);
 	      }
-
-	      markerListsArray.push(clonedMarkersList);
-	      recursiveMarkersMaker(lastMarkersList, maxPosition, minimumSpace, clonedMarkersList, markerListsArray);
 	    }
 	  }
 	  // Cannot move any more markers. Return the full array.
@@ -10358,7 +10376,7 @@
 	var baseFunction = function baseFunction(input) {
 	  var picksString = input.toString();
 
-	  var lengthValidationResult = (0, _validators.isEnoughNumbers)(picksString);
+	  var lengthValidationResult = isEnoughNumbers(picksString);
 	  if (lengthValidationResult.status == "failed") {
 	    return lengthValidationResult.reason;
 	  }
@@ -10411,52 +10429,6 @@
 	};
 
 	exports.default = makeResponse;
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.areAllValidSizes = exports.areAllUnique = exports.isEnoughNumbers = undefined;
-
-	var _makeResponse = __webpack_require__(4);
-
-	var _makeResponse2 = _interopRequireDefault(_makeResponse);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// Validation functions ---------------------------
-
-	var isEnoughNumbers = exports.isEnoughNumbers = function isEnoughNumbers(picksString) {
-	  if (picksString.length >= 7 && picksString.length <= 14) {
-	    return (0, _makeResponse2.default)("success", "");
-	  } else {
-	    return (0, _makeResponse2.default)("failed", "Invalid number of digits. There must be between 7 and 14 numbers in this string.");
-	  }
-	};
-
-	var areAllUnique = exports.areAllUnique = function areAllUnique(picks) {
-	  var picks = picks.sort();
-	  for (var index = 0; index < picks.length; index++) {
-	    if (picks[index] == picks[index + 1]) {
-	      return (0, _makeResponse2.default)("failed", "This number is duplicated: " + picks[index]);
-	    }
-	  }
-	  return (0, _makeResponse2.default)("success", "");
-	};
-
-	var areAllValidSizes = exports.areAllValidSizes = function areAllValidSizes(picks) {
-	  for (var index = 0; index < picks.length; index++) {
-	    if (picks[index] < 1 || picks[index] > 59) {
-	      return (0, _makeResponse2.default)("failed", "This lotto pick is out of range: " + picks[index]);
-	    }
-	  }
-	  return (0, _makeResponse2.default)("success", "");
-	};
 
 /***/ }
 /******/ ]);
