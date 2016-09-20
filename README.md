@@ -9,19 +9,19 @@
 The source code is in the `./src` folder. The compiled code is in `./bin/bundle.js`. The following refers to the source code.
 
 1. `index.js` is the main point of contact between the UI and the logic that searches for lottery picks. The file sanitizes the user's input and sends that data to `baseProcessor.js`
-2. `baseProcessor.js` loops through the individual series. Each iteration calls the `stringProcessor.js` file. See next section on how this file works.
+2. `baseProcessor.js` loops through the array of strings. Each iteration calls the `stringProcessor.js` file. See next section on how this file works.
 3. The results flow back to `baseProcessor.js`. This file returns the results to `index.js` which renders the HTML.
 
-## How does the app determine if a series has valid lotto pics - How `stringProcessor.js` works
+## How does the app determine if a string has valid lotto picks - How `stringProcessor.js` works
 
 This section only looks at the `stringProcessor.js` file.
 
-Take this series for example:
+Take this string for example:
 `4938532894754`
 
-First, we need to determine how many single-digit lotto picks are in this series:
+First, we need to determine how many single-digit lotto picks are in this string:
 
-> 13 total digits - 7 (minimum possible digits in a series of lotto picks) = 6
+> 13 total digits - 7 (minimum possible digits in a string of lotto picks) = 6
 
 > Therefore, there must be 6 lotto picks that have two digits.
 
@@ -37,7 +37,7 @@ Then we need to make a list: Which of these numbers `4938532894754` **must** be 
 
 With this logic, we produce an array of possible positions for single-digit picks (using zero-index): `0, 2 (but not 1), ... 10 (but not 11), 12`
 
-Then we parse the series by using the above list to tell us where to produce a single-digit pick:
+Then we parse the string by using the above list to tell us where to produce a single-digit pick:
 
 * `0 (the first number is the single-digit)` -> **4**, 93, 85, 32, 89, 47, 54
 * `2 (the third number is the single-digit)` -> 49, 38, **5**, 32, 89, 47, 54
@@ -55,7 +55,7 @@ As soon as the app finds a _valid_ set, it will stop producing sets of lotto pic
 
 ### But what if there is more than one single-digit pick?
 
-Here is a series of 12 digits: `493853289475`
+Here is a string of 12 digits: `493853289475`
 
 **There must be 2 single-digit lotto picks.**
 
@@ -77,6 +77,6 @@ The parsing scenarios would look like this:
 
 Use **comments** to identify a group of functions as related.
 
-**Alternate between solving the problem and validating the data. Don't save all the validation until the end.** Validation reduces the amount of data that each step processes. For example, when the app is parsing the series of numbers using the parsing scenarios, the app skips to the next scenario if the current scenario encounters an invalid lotto pick.
+**Alternate between solving the problem and validating the data. Don't save all the validation until the end.** Validation reduces the amount of data that each step processes. For example, when the app is parsing the string of numbers using the parsing scenarios, the app skips to the next scenario if the current scenario encounters an invalid lotto pick.
 
 **Take full advantage of skipping code: `break`, `continue`, `return`, etc.** The app uses these statements for the same reason as above: prevent unnecessary persisting of invalid lotto picks.
