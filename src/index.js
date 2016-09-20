@@ -2,7 +2,7 @@
 import $ from "jquery"
 import baseProcessor from "./baseProcessor"
 
-var submitToProcessor = (rawInput) => {
+const submitToProcessor = (rawInput) => {
   var sanitized = rawInput.replace(/[^,0-9]/g, "")
   var array = sanitized.split(",")
   var filteredArray = array.filter(value => value.length > 0)
@@ -10,7 +10,7 @@ var submitToProcessor = (rawInput) => {
   return baseProcessor(filteredArray)
 }
 
-var renderResults = (results) => {
+const renderResults = (results) => {
   var html = ""
   for (var property in results) {
     html += "<tr>"
@@ -18,7 +18,7 @@ var renderResults = (results) => {
     html += "<td>" +results[property]+ "</td>"
     html += "</tr>"
   }
-  $('.results').html(html)
+  $('tbody').html(html)
 }
 
 $(document).ready(function(){

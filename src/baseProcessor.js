@@ -1,6 +1,6 @@
 import stringProcessor from './stringProcessor'
 
-var baseProcessor = (arrayOfStrings) => {
+const baseProcessor = (arrayOfStrings) => {
   console.log(arrayOfStrings)
   var resultsJson = {}
 

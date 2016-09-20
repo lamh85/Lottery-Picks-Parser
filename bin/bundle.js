@@ -50,7 +50,7 @@
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _baseProcessor = __webpack_require__(4);
+	var _baseProcessor = __webpack_require__(2);
 
 	var _baseProcessor2 = _interopRequireDefault(_baseProcessor);
 
@@ -75,7 +75,7 @@
 	    html += "<td>" + results[property] + "</td>";
 	    html += "</tr>";
 	  }
-	  (0, _jquery2.default)('.results').html(html);
+	  (0, _jquery2.default)('tbody').html(html);
 	};
 
 	(0, _jquery2.default)(document).ready(function () {
@@ -10171,28 +10171,7 @@
 
 
 /***/ },
-/* 2 */,
-/* 3 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	// Standarized response JSON ----------------------
-
-	var makeResponse = function makeResponse(status, reason) {
-	  return {
-	    status: status,
-	    reason: reason
-	  };
-	};
-
-	exports.default = makeResponse;
-
-/***/ },
-/* 4 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10201,7 +10180,7 @@
 	  value: true
 	});
 
-	var _stringProcessor = __webpack_require__(5);
+	var _stringProcessor = __webpack_require__(3);
 
 	var _stringProcessor2 = _interopRequireDefault(_stringProcessor);
 
@@ -10221,7 +10200,7 @@
 	exports.default = baseProcessor;
 
 /***/ },
-/* 5 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10230,7 +10209,7 @@
 	  value: true
 	});
 
-	var _makeResponse = __webpack_require__(3);
+	var _makeResponse = __webpack_require__(4);
 
 	var _makeResponse2 = _interopRequireDefault(_makeResponse);
 
@@ -10242,7 +10221,7 @@
 	  if (picksString.length >= 7 && picksString.length <= 14) {
 	    return (0, _makeResponse2.default)("success", "");
 	  } else {
-	    return (0, _makeResponse2.default)("failed", "There must be between 7 and 14 numbers in this string.");
+	    return (0, _makeResponse2.default)("failed", "Invalid number of digits. There must be between 7 and 14 numbers in this string.");
 	  }
 	};
 
@@ -10433,6 +10412,26 @@
 	};
 
 	exports.default = baseFunction;
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	// Standarized response JSON ----------------------
+
+	var makeResponse = function makeResponse(status, reason) {
+	  return {
+	    status: status,
+	    reason: reason
+	  };
+	};
+
+	exports.default = makeResponse;
 
 /***/ }
 /******/ ]);

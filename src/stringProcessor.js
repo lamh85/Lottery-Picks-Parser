@@ -2,15 +2,15 @@ import makeResponse from './makeResponse'
 
 // Validation functions ---------------------------
 
-var isEnoughNumbers = (picksString) => {
+const isEnoughNumbers = (picksString) => {
   if (picksString.length >= 7 && picksString.length <= 14) {
     return makeResponse("success", "")
   } else {
-    return makeResponse("failed", "There must be between 7 and 14 numbers in this string.")
+    return makeResponse("failed", "Invalid number of digits. There must be between 7 and 14 numbers in this string.")
   }
 }
 
-var areAllUnique = (picks) => {
+const areAllUnique = (picks) => {
   var picks = picks.sort()
   for (var index = 0; index < picks.length; index ++) {
     if (picks[index] == picks[index + 1]) {
@@ -20,7 +20,7 @@ var areAllUnique = (picks) => {
   return makeResponse("success", "")
 }
 
-var areAllValidSizes = (picks) => {
+const areAllValidSizes = (picks) => {
   for (var index = 0; index < picks.length; index ++) {
     if (picks[index] < 1 || picks[index] > 59) {
       return makeResponse("failed", "This lotto pick is out of range: " + picks[index])
@@ -29,7 +29,7 @@ var areAllValidSizes = (picks) => {
   return makeResponse("success", "")
 }
 
-var validateEachPick = (picks) => {
+const validateEachPick = (picks) => {
   var validationResult = areAllUnique(picks)
   if (validationResult.status == "failed") {
     return validationResult
@@ -44,7 +44,7 @@ var validateEachPick = (picks) => {
 
 // Make markers -------------------------------------
 
-var recursiveMarkersMaker = (lastMarkersList, maxPosition, minimumSpace, markersList, markerListsArray) => {
+const recursiveMarkersMaker = (lastMarkersList, maxPosition, minimumSpace, markersList, markerListsArray) => {
   var clonedMarkersList = markersList.slice(0)
   var markerListsArray = markerListsArray
 
@@ -83,7 +83,7 @@ var recursiveMarkersMaker = (lastMarkersList, maxPosition, minimumSpace, markers
   return markerListsArray
 }
 
-var markersMakerBase = (picksString, numberOfSingleDigits) => {
+const markersMakerBase = (picksString, numberOfSingleDigits) => {
   var maxPosition = picksString.length - 1
 
   var indexCounter = 0
@@ -99,7 +99,7 @@ var markersMakerBase = (picksString, numberOfSingleDigits) => {
 
 // Easy Answers -----------------------------------------
 
-var allAreSingleDigits = (picksString) => {
+const allAreSingleDigits = (picksString) => {
   var picks = picksString.match(/.{1}/g)
   var validationResult = validateEachPick(picks)
   if (validationResult.status == "success") {
@@ -109,7 +109,7 @@ var allAreSingleDigits = (picksString) => {
   }
 }
 
-var allAreDoubleDigits = (picksString) => {
+const allAreDoubleDigits = (picksString) => {
   var picks = picksString.match(/.{1,2}/g)
   var validationResult = validateEachPick(picks)
   if (validationResult.status == "success") {
@@ -121,7 +121,7 @@ var allAreDoubleDigits = (picksString) => {
 
 // Parse string by using the markers -------------------------
 
-var stringHasValidPicks = (picksString, markerListsArray) => {
+const stringHasValidPicks = (picksString, markerListsArray) => {
   var parsedString = []
 
   for (var listsIndex = 0; listsIndex < markerListsArray.length; listsIndex ++) {
@@ -162,7 +162,7 @@ var stringHasValidPicks = (picksString, markerListsArray) => {
 
 // Run this function ------------------------------------------
 
-var baseFunction = (input) => {
+const baseFunction = (input) => {
   var picksString = input.toString()
 
   var lengthValidationResult = isEnoughNumbers(picksString)
