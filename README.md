@@ -64,3 +64,15 @@ We need to list all the possible parsing scenarios.
 
 The parsing scenarios would look like this:
 `[0, 1], [0, 3] ... [10, 11] (the previous 10 digits would produce 5 double-digit picks)`
+
+## Code Design and Principles
+
+**Single responsibility principle** - Use small JS functions that are focused on one small task.
+
+**Make one file responsible for one general task.** EG: one file for validating lotto picks, and another for standardizing the response's JSON structure.
+
+Use **comments** to identify a group of functions as related.
+
+**Alternate between solving the problem and validating the data. Don't save all the validation until the end.** Validation reduces the amount of data that each step processes. For example, when the app is parsing the series of numbers using the parsing scenarios, the app skips to the next scenario if the current scenario encounters an invalid lotto pick.
+
+**Take full advantage of interruptions: `break`, `continue`, `return`, etc.** The app uses these statements for the same reason as above: prevent unnecessary persisting of invalid lotto picks.
