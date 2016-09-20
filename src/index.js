@@ -12,12 +12,12 @@ const submitToProcessor = (rawInput) => {
 
 const renderResults = (results) => {
   var html = ""
-  for (var property in results) {
+  results.map(element => {
     html += "<tr>"
-    html += "<td>" +property+ "</td>"
-    html += "<td>" +results[property]+ "</td>"
+    html += "<td>" +element.input+ "</td>"
+    html += "<td>" +element.output+ "</td>"
     html += "</tr>"
-  }
+  })
   $('tbody').html(html)
 }
 

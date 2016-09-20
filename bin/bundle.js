@@ -69,12 +69,12 @@
 
 	var renderResults = function renderResults(results) {
 	  var html = "";
-	  for (var property in results) {
+	  results.map(function (element) {
 	    html += "<tr>";
-	    html += "<td>" + property + "</td>";
-	    html += "<td>" + results[property] + "</td>";
+	    html += "<td>" + element.input + "</td>";
+	    html += "<td>" + element.output + "</td>";
 	    html += "</tr>";
-	  }
+	  });
 	  (0, _jquery2.default)('tbody').html(html);
 	};
 
@@ -10185,10 +10185,13 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var baseProcessor = function baseProcessor(arrayOfStrings) {
-	  var resultsJson = {};
+	  var resultsJson = [];
 
 	  arrayOfStrings.map(function (string) {
-	    resultsJson[string] = (0, _stringProcessor2.default)(string);
+	    resultsJson.push({
+	      input: string,
+	      output: (0, _stringProcessor2.default)(string)
+	    });
 	  });
 
 	  return resultsJson;

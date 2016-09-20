@@ -73,7 +73,7 @@ The parsing scenarios would look like this:
 
 **Single responsibility principle** - Use small JS functions that are focused on one small task.
 
-**Make one file responsible for one general task.** However, we cannot have too many small files. I tried that, and encountered Stack Overflow errors.
+**Make one file responsible for one general task.** However, we cannot have too many small files. I tried that, and encountered Stack Overflow errors because there were too many function calls.
 
 Use **comments** to identify a group of functions as related.
 
