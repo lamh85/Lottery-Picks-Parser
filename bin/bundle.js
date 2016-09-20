@@ -10259,17 +10259,17 @@
 
 	// Make markers -------------------------------------
 
-	var recursiveMarkersMaker = function recursiveMarkersMaker(lastMarkersList, maxPosition, minimumSpace, markersList, markerListsArray) {
+	var recursiveMarkersMaker = function recursiveMarkersMaker(lastMarkersList, maxPosition, markersList, markerListsArray) {
 	  var clonedMarkersList = markersList.slice(0);
 	  var markerListsArray = markerListsArray;
 
 	  var oldPosition = clonedMarkersList[clonedMarkersList.length - 1];
-	  var newPosition = clonedMarkersList[clonedMarkersList.length - 1] + minimumSpace;
+	  var newPosition = clonedMarkersList[clonedMarkersList.length - 1] + 2;
 	  if (newPosition <= maxPosition) {
 	    clonedMarkersList[clonedMarkersList.length - 1] = newPosition;
 	    markerListsArray.push(clonedMarkersList);
 
-	    recursiveMarkersMaker(lastMarkersList, maxPosition, minimumSpace, clonedMarkersList, markerListsArray);
+	    recursiveMarkersMaker(lastMarkersList, maxPosition, clonedMarkersList, markerListsArray);
 	    // Move the right-most marker
 	  } else if (clonedMarkersList[0] != lastMarkersList[0]) {
 	    // Find the right-most marker that has not been moved to final position yet
@@ -10281,7 +10281,7 @@
 	      }
 	    }
 	    if (foundRightMostNumber == true) {
-	      var newPosition = clonedMarkersList[rightMostFinder] = clonedMarkersList[rightMostFinder] + minimumSpace;
+	      var newPosition = clonedMarkersList[rightMostFinder] = clonedMarkersList[rightMostFinder] + 2;
 
 	      if (newPosition <= maxPosition) {
 	        // Set the subsequent numbers as consecutive
@@ -10290,7 +10290,7 @@
 	        }
 
 	        markerListsArray.push(clonedMarkersList);
-	        recursiveMarkersMaker(lastMarkersList, maxPosition, minimumSpace, clonedMarkersList, markerListsArray);
+	        recursiveMarkersMaker(lastMarkersList, maxPosition, clonedMarkersList, markerListsArray);
 	      }
 	    }
 	  }
@@ -10309,7 +10309,7 @@
 	    lastMarkersList[numberOfSingleDigits - 1 - indexCounter] = maxPosition - indexCounter;
 	    indexCounter++;
 	  }
-	  return recursiveMarkersMaker(lastMarkersList, maxPosition, 2, firstMarkersList, [firstMarkersList]);
+	  return recursiveMarkersMaker(lastMarkersList, maxPosition, firstMarkersList, [firstMarkersList]);
 	};
 
 	// Easy Answers -----------------------------------------
