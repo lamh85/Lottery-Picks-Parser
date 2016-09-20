@@ -10278,7 +10278,7 @@
 	      }
 	    }
 	    if (foundRightMostNumber == true) {
-	      var newPosition = clonedMarkersList[rightMostFinder] = clonedMarkersList[rightMostFinder] + minimumSpace;
+	      var newPosition = clonedMarkersList[rightMostFinder] + minimumSpace;
 
 	      if (newPosition <= maxPosition) {
 	        // Set the subsequent numbers as consecutive
