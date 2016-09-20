@@ -21,19 +21,20 @@ Take this string for example:
 
 First, we need to determine how many single-digit lotto picks are in this string:
 
-> 13 total digits - 7 (minimum possible digits in a string of lotto picks) = 6
+> 13 digits in the string - 7 (minimum possible digits in a string of lotto picks) = 6
 
 > Therefore, there must be 6 lotto picks that have two digits.
 
-> 7 lotto picks - 6 double-digit picks = 1 single-digit pick
+> 7 lotto picks - 6 double-digit picks = 1
 
-**The lotto picks in this example must have *exactly* one single-digit pick:**
+**Therefore lotto picks in this example must have *exactly* one single-digit pick:**
 
 Then we need to make a list: Which of these numbers `4938532894754` **must** be the single-digit lotto pick?
 
 * The first position (4) could be a single because the remaining 12 could form 6 double-digit numbers.
 * The second position (9) will **not** work because that would make the first position (4) a single-digit pick. Therefore, we would have **two** single-digit lotto picks. But we already determined that this example **must** contain only one single-digit pick.
 * The second last position (5) is invalid for the same reason.
+* And so forth...
 
 With this logic, we produce an array of possible positions for single-digit picks (using zero-index): `0, 2 (but not 1), ... 10 (but not 11), 12`
 
