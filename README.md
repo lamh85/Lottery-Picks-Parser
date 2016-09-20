@@ -4,7 +4,7 @@
 1. Clone this repo.
 2. Open in your browser: `./bin/index.html`.
 
-## The logical flow between JS files
+## The logical flow between the JS files
 
 The source code is in the `./src` folder. The compiled code is in `./bin/bundle.js`. The following refers to the source code.
 
@@ -59,7 +59,7 @@ We need to list all the possible parsing scenarios.
 
 * Positions `0` and `1` can be in the same scenario because that would leave 10 digits which forms 5 double-digit picks.
 * Positions `0` and `2` _cannot_ be in the same scenario because that would produce a third single-digit pick.
-* A scenario can have `0` and `3` because a double-digit would be formed by `1` and `2`.
+* A scenario can have `0` and `3` because a double-digit would be formed by positions `1` and `2`.
 * And so forth.
 
 The parsing scenarios would look like this:
