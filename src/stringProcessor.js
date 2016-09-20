@@ -18,6 +18,15 @@ const validateEachPick = (picks) => {
 
 // Make markers -------------------------------------
 
+/*
+lastMarkersList = The most recently-generated parsing scenario.
+  EG: [0, 1] // The single digits are at indexes 0, and 1.
+maxPosition = The last index number of the series of digits.
+  EG: The maxPosition of "1234" is 3.
+lastMarkersList = A scenario in which all of the single-digits are at the end of the series.
+  EG: [9, 10, 11] if the series has 12 digits
+markerListsArray = A culminating list of parsing scenarios that grows in each recursive iteration.
+*/
 const recursiveMarkersMaker = (lastMarkersList, maxPosition, minimumSpace, markersList, markerListsArray) => {
   var clonedMarkersList = markersList.slice(0)
   var markerListsArray = markerListsArray
