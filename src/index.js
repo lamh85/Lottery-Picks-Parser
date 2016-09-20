@@ -22,8 +22,6 @@ const renderResults = (results) => {
 }
 
 $(document).ready(function(){
-  console.log('document is ready, yes!')
-
   const handleSubmit = event => {
     var rawInput = $("textarea").val()
     var results = submitToProcessor(rawInput)

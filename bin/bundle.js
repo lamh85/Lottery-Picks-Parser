@@ -79,8 +79,6 @@
 	};
 
 	(0, _jquery2.default)(document).ready(function () {
-	  console.log('document is ready, yes!');
-
 	  var handleSubmit = function handleSubmit(event) {
 	    var rawInput = (0, _jquery2.default)("textarea").val();
 	    var results = submitToProcessor(rawInput);
@@ -10187,7 +10185,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var baseProcessor = function baseProcessor(arrayOfStrings) {
-	  console.log(arrayOfStrings);
 	  var resultsJson = {};
 
 	  arrayOfStrings.map(function (string) {

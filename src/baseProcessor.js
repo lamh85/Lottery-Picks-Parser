@@ -1,7 +1,6 @@
 import stringProcessor from './stringProcessor'
 
 const baseProcessor = (arrayOfStrings) => {
-  console.log(arrayOfStrings)
   var resultsJson = {}
 
   arrayOfStrings.map(string => {
