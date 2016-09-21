@@ -48,7 +48,6 @@ const recursiveMarkersMaker = (maxMarkersList, maxPosition, markersList, markerL
   var clonedMarkersList = markersList.slice(0)
   var markerListsArray = markerListsArray
 
-  var oldPosition = clonedMarkersList[clonedMarkersList.length - 1]
   var newPosition = clonedMarkersList[clonedMarkersList.length - 1] + 2
   if (newPosition <= maxPosition) {
     clonedMarkersList[clonedMarkersList.length - 1] = newPosition
