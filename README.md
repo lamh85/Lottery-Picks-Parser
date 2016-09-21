@@ -41,7 +41,7 @@ With this logic, we produce an array of possible positions for single-digit pick
 Then we parse the string by using the above list to tell us where to produce a single-digit pick:
 
 * `0 (the first number is the single-digit)` -> **4**, 93, 85, 32, 89, 47, 54
-* `2 (the third number is the single-digit)` -> 49, 38, **5**, 32, 89, 47, 54
+* `2 (the third number is the single-digit)` -> 49, **3**, 85, 32, 89, 47, 54
 * and so forth
 
 The above produces an array of sets of lotto picks:
