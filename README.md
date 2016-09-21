@@ -49,7 +49,7 @@ The above produces an array of sets of lotto picks:
 
 But as the app makes the list of these sets, it also validates the picks:
 
-* Each pick should be between 1 and 49.
+* Each pick should be between 1 and 59.
 * No duplicates allowed.
 
 As soon as the app finds a _valid_ set, it will stop producing sets of lotto picks.
