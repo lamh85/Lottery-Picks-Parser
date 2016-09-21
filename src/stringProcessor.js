@@ -2,7 +2,7 @@ import makeResponse from './makeResponse'
 
 // Validation functions ---------------------------
 
-var isEnoughNumbers = (picksString) => {
+const isEnoughNumbers = (picksString) => {
   if (picksString.length >= 7 && picksString.length <= 14) {
     return makeResponse("success", "")
   } else {
@@ -10,7 +10,7 @@ var isEnoughNumbers = (picksString) => {
   }
 }
 
-var areAllUnique = (picks) => {
+const areAllUnique = (picks) => {
   var picks = picks.sort()
   for (var index = 0; index < picks.length; index ++) {
     if (picks[index] == picks[index + 1]) {
@@ -20,7 +20,7 @@ var areAllUnique = (picks) => {
   return makeResponse("success", "")
 }
 
-var areAllValidSizes = (picks) => {
+const areAllValidSizes = (picks) => {
   for (var index = 0; index < picks.length; index ++) {
     if (picks[index] < 1 || picks[index] > 59) {
       return makeResponse("failed", "This lotto pick is out of range: " + picks[index])
@@ -29,7 +29,7 @@ var areAllValidSizes = (picks) => {
   return makeResponse("success", "")
 }
 
-var validateEachPick = (picks) => {
+const validateEachPick = (picks) => {
   var validationResult = areAllUnique(picks)
   if (validationResult.status == "failed") {
     return validationResult
@@ -44,7 +44,7 @@ var validateEachPick = (picks) => {
 
 // Make markers -------------------------------------
 
-var recursiveMarkersMaker = (lastMarkersList, maxPosition, markersList, markerListsArray) => {
+const recursiveMarkersMaker = (maxMarkersList, maxPosition, markersList, markerListsArray) => {
   var clonedMarkersList = markersList.slice(0)
   var markerListsArray = markerListsArray
 
@@ -54,13 +54,13 @@ var recursiveMarkersMaker = (lastMarkersList, maxPosition, markersList, markerLi
     clonedMarkersList[clonedMarkersList.length - 1] = newPosition
     markerListsArray.push(clonedMarkersList)
 
-    recursiveMarkersMaker(lastMarkersList, maxPosition, clonedMarkersList, markerListsArray)
+    recursiveMarkersMaker(maxMarkersList, maxPosition, clonedMarkersList, markerListsArray)
   // Move the right-most marker
-  } else if (clonedMarkersList[0] != lastMarkersList[0]) {
+  } else if (clonedMarkersList[0] != maxMarkersList[0]) {
     // Find the right-most marker that has not been moved to final position yet
     var foundRightMostNumber = false
     for (var rightMostFinder = clonedMarkersList.length - 2; rightMostFinder >= 0; rightMostFinder --) {
-      if (clonedMarkersList[rightMostFinder] != lastMarkersList[rightMostFinder]) {
+      if (clonedMarkersList[rightMostFinder] != maxMarkersList[rightMostFinder]) {
         foundRightMostNumber = true
         break
       }
@@ -74,30 +74,30 @@ var recursiveMarkersMaker = (lastMarkersList, maxPosition, markersList, markerLi
       }
 
       markerListsArray.push(clonedMarkersList)
-      recursiveMarkersMaker(lastMarkersList, maxPosition, clonedMarkersList, markerListsArray)
+      recursiveMarkersMaker(maxMarkersList, maxPosition, clonedMarkersList, markerListsArray)
     }
   }
   // Cannot move any more markers. Return the full array.
   return markerListsArray
 }
 
-var markersMakerBase = (picksString, numberOfSingleDigits) => {
+const markersMakerBase = (picksString, numberOfSingleDigits) => {
   var maxPosition = picksString.length - 1
 
   var indexCounter = 0
   var firstMarkersList = []
-  var lastMarkersList = []
+  var maxMarkersList = []
   while (indexCounter <= numberOfSingleDigits - 1) {
     firstMarkersList[indexCounter] = indexCounter
-    lastMarkersList[numberOfSingleDigits - 1 - indexCounter] = maxPosition - indexCounter
+    maxMarkersList[numberOfSingleDigits - 1 - indexCounter] = maxPosition - indexCounter
     indexCounter ++
   }
-  return recursiveMarkersMaker(lastMarkersList, maxPosition, firstMarkersList, [firstMarkersList])
+  return recursiveMarkersMaker(maxMarkersList, maxPosition, firstMarkersList, [firstMarkersList])
 }
 
 // Easy Answers -----------------------------------------
 
-var allAreSingleDigits = (picksString) => {
+const allAreSingleDigits = (picksString) => {
   var picks = picksString.match(/.{1}/g)
   var validationResult = validateEachPick(picks)
   if (validationResult.status == "success") {
@@ -107,7 +107,7 @@ var allAreSingleDigits = (picksString) => {
   }
 }
 
-var allAreDoubleDigits = (picksString) => {
+const allAreDoubleDigits = (picksString) => {
   var picks = picksString.match(/.{1,2}/g)
   var validationResult = validateEachPick(picks)
   if (validationResult.status == "success") {
@@ -119,7 +119,7 @@ var allAreDoubleDigits = (picksString) => {
 
 // Parse string by using the markers -------------------------
 
-var stringHasValidPicks = (picksString, markerListsArray) => {
+const stringHasValidPicks = (picksString, markerListsArray) => {
   var parsedString = []
 
   for (var listsIndex = 0; listsIndex < markerListsArray.length; listsIndex ++) {
@@ -160,7 +160,7 @@ var stringHasValidPicks = (picksString, markerListsArray) => {
 
 // Run this function ------------------------------------------
 
-var baseFunction = (input) => {
+const baseFunction = (input) => {
   var picksString = input.toString()
 
   var lengthValidationResult = isEnoughNumbers(picksString)

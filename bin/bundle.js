@@ -10259,7 +10259,7 @@
 
 	// Make markers -------------------------------------
 
-	var recursiveMarkersMaker = function recursiveMarkersMaker(lastMarkersList, maxPosition, markersList, markerListsArray) {
+	var recursiveMarkersMaker = function recursiveMarkersMaker(maxMarkersList, maxPosition, markersList, markerListsArray) {
 	  var clonedMarkersList = markersList.slice(0);
 	  var markerListsArray = markerListsArray;
 
@@ -10269,13 +10269,13 @@
 	    clonedMarkersList[clonedMarkersList.length - 1] = newPosition;
 	    markerListsArray.push(clonedMarkersList);
 
-	    recursiveMarkersMaker(lastMarkersList, maxPosition, clonedMarkersList, markerListsArray);
+	    recursiveMarkersMaker(maxMarkersList, maxPosition, clonedMarkersList, markerListsArray);
 	    // Move the right-most marker
-	  } else if (clonedMarkersList[0] != lastMarkersList[0]) {
+	  } else if (clonedMarkersList[0] != maxMarkersList[0]) {
 	    // Find the right-most marker that has not been moved to final position yet
 	    var foundRightMostNumber = false;
 	    for (var rightMostFinder = clonedMarkersList.length - 2; rightMostFinder >= 0; rightMostFinder--) {
-	      if (clonedMarkersList[rightMostFinder] != lastMarkersList[rightMostFinder]) {
+	      if (clonedMarkersList[rightMostFinder] != maxMarkersList[rightMostFinder]) {
 	        foundRightMostNumber = true;
 	        break;
 	      }
@@ -10289,7 +10289,7 @@
 	      }
 
 	      markerListsArray.push(clonedMarkersList);
-	      recursiveMarkersMaker(lastMarkersList, maxPosition, clonedMarkersList, markerListsArray);
+	      recursiveMarkersMaker(maxMarkersList, maxPosition, clonedMarkersList, markerListsArray);
 	    }
 	  }
 	  // Cannot move any more markers. Return the full array.
@@ -10301,13 +10301,13 @@
 
 	  var indexCounter = 0;
 	  var firstMarkersList = [];
-	  var lastMarkersList = [];
+	  var maxMarkersList = [];
 	  while (indexCounter <= numberOfSingleDigits - 1) {
 	    firstMarkersList[indexCounter] = indexCounter;
-	    lastMarkersList[numberOfSingleDigits - 1 - indexCounter] = maxPosition - indexCounter;
+	    maxMarkersList[numberOfSingleDigits - 1 - indexCounter] = maxPosition - indexCounter;
 	    indexCounter++;
 	  }
-	  return recursiveMarkersMaker(lastMarkersList, maxPosition, firstMarkersList, [firstMarkersList]);
+	  return recursiveMarkersMaker(maxMarkersList, maxPosition, firstMarkersList, [firstMarkersList]);
 	};
 
 	// Easy Answers -----------------------------------------
